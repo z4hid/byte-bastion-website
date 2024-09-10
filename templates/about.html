@@ -3,19 +3,38 @@
 
 {% block content %}
 
-<section id="home" class="hero-section img-bg" style="background-image: url('{% static "img/bg3.jpg" %}')">
-   
+<section id="about" class="about-section pt-150 pb-100" style="background-color: rgb(201, 213, 236);">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="about-content">
+                    <h1 class="wow fadeInUp" data-wow-delay=".2s">About ByteBastion</h1>
+                    <p class="wow fadeInUp" data-wow-delay=".4s">
+                        At ByteBastion, we believe that digital security is not just a service—it's a necessity. Located in the vibrant heart of Miami, we harness the power of artificial intelligence to deliver cutting-edge cybersecurity solutions that safeguard your digital assets.
+                    </p>
+                    <p class="wow fadeInUp" data-wow-delay=".6s">
+                        Founded on the principle of innovation, ByteBastion combines advanced AI algorithms with an intuitive approach to cybersecurity. From detecting the latest malware strains to shielding your network from intrusions, we ensure your organization remains protected.
+                    </p>
+                    <a href="#features" class="main-btn btn-hover wow fadeInUp" data-wow-delay=".8s">Explore Our Features</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-img wow fadeInUp" data-wow-delay=".5s">
+                    <img src="{% static 'img/about-img.jpg' %}" alt="About ByteBastion">
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
-<section id="features" class="service-section gray-bg pt-150 pb-70">
+</section>
+<section id="why-choose-us" class="why-choose-section gray-bg pt-100 pb-70">
     <div class="container">
         <div class="row">
-            <div class="col-xl-5 col-lg-6 col-md-8 mx-auto">
+            <div class="col-xl-6 col-lg-6 col-md-8 mx-auto">
                 <div class="section-title text-center mb-55">
-                    <span class="wow fadeInDown" data-wow-delay=".2s">Our Core</span>
-                    <h2 class="mb-15 wow fadeInUp" data-wow-delay=".4s">Features</h2>
-                    <p class="wow fadeInUp" data-wow-delay=".6s">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore.</p>
+                    <span class="wow fadeInDown" data-wow-delay=".2s">Why ByteBastion?</span>
+                    <h2 class="mb-15 wow fadeInUp" data-wow-delay=".4s">Why Choose Us</h2>
+                    <p class="wow fadeInUp" data-wow-delay=".6s">We are dedicated to offering robust, AI-powered cybersecurity solutions tailored to your needs. Here's why we stand out:</p>
                 </div>
             </div>
         </div>
@@ -23,42 +42,41 @@
             <div class="col-xl-3 col-lg-3 col-md-6">
                 <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.3s">
                     <div class="service-icon icon-gradient gradient-1 mb-30">
-                        <i class="lni lni-money-protection"></i>
+                        <i class="lni lni-shield"></i>
                     </div>
-                    <h4 class="mb-15">Simple Pricing</h4>
-                    <p>Lorem ipsum dolor sit consetetu sadipscing elitr, sed dia nonum eirmod tempor.</p>
+                    <h4 class="mb-15">AI-Powered Protection</h4>
+                    <p>Our intelligent systems constantly evolve to detect and neutralize even the most sophisticated threats.</p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-6">
                 <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.3s">
                     <div class="service-icon icon-gradient gradient-2 mb-30">
-                        <i class="lni lni-ux"></i>
+                        <i class="lni lni-network"></i>
                     </div>
-                    <h4 class="mb-15">Effecient Workflow</h4>
-                    <p>Lorem ipsum dolor sit consetetu sadipscing elitr, sed dia nonum eirmod tempor.</p>
+                    <h4 class="mb-15">Security Expertise</h4>
+                    <p>With our various services, we bring bold, reliable solutions to the digital landscape.</p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-6">
                 <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.3s">
                     <div class="service-icon icon-gradient gradient-3 mb-30">
-                        <i class="lni lni-users"></i>
+                        <i class="lni lni-lock"></i>
                     </div>
-                    <h4 class="mb-15">Built-in CRM</h4>
-                    <p>Lorem ipsum dolor sit consetetu sadipscing elitr, sed dia nonum eirmod tempor.</p>
+                    <h4 class="mb-15">Customer-Centric Approach</h4>
+                    <p>We offer personalized solutions tailored to meet the unique needs of your business.</p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-3 col-md-6">
                 <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.3s">
-                    <div class="service-icon icon-gradient  gradient-4 mb-30">
-                        <i class="lni lni-reload"></i>
+                    <div class="service-icon icon-gradient gradient-4 mb-30">
+                        <i class="lni lni-unlock"></i>
                     </div>
-                    <h4 class="mb-15">Regular Updates</h4>
-                    <p>Lorem ipsum dolor sit consetetu sadipscing elitr, sed dia nonum eirmod tempor.</p>
+                    <h4 class="mb-15">Innovative Features</h4>
+                    <p>Our suite of tools provides comprehensive protection at every layer—from real-time monitoring to ransomware recovery.</p>
                 </div>
             </div>
         </div>
     </div>
-</section>
 </section>
 
 {% endblock content %}

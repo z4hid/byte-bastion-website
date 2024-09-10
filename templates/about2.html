@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section id="home" class="hero-section img-bg" style="background-image: url('{% static "img/bg-1.jpg" %}')">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="wow fadeInUp" data-wow-delay=".2s">Welcome to ByteBastion</h1>
+                    <p class="wow fadeInUp" data-wow-delay=".4s">
+                        Revolutionizing cybersecurity with AI-powered solutions. Located in the heart of Miami,
+                        we're as dynamic as Messi on the nearby football field, but our playing field is your digital security.
+                    </p>
+                    <a href="#features" class="main-btn btn-hover wow fadeInUp" data-wow-delay=".6s">Explore Our Solutions</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-img wow fadeInUp" data-wow-delay=".5s">
+                    <img src="{% static 'img/hero-img.png' %}" alt="ByteBastion Security">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="service-section gray-bg pt-150 pb-70">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-6 col-md-8 mx-auto">
+                <div class="section-title text-center mb-55">
+                    <span class="wow fadeInDown" data-wow-delay=".2s">Our Core</span>
+                    <h2 class="mb-15 wow fadeInUp" data-wow-delay=".4s">Features</h2>
+                    <p class="wow fadeInUp" data-wow-delay=".6s">At ByteBastion, we're committed to bringing the next cybersecurity revolution to the industry. Explore our cutting-edge features designed to keep your digital assets safe.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-md-6">
+                <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".2s" data-wow-duration="1.3s">
+                    <div class="service-icon icon-gradient gradient-1 mb-30">
+                        <i class="lni lni-shield"></i>
+                    </div>
+                    <h4 class="mb-15">VirusVac</h4>
+                    <p>Our flagship antivirus solution for Windows. VirusVac scans files and folders with AI-powered precision, ensuring your system stays malware-free.</p>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6">
+                <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".4s" data-wow-duration="1.3s">
+                    <div class="service-icon icon-gradient gradient-2 mb-30">
+                        <i class="lni lni-network"></i>
+                    </div>
+                    <h4 class="mb-15">Network Guardian</h4>
+                    <p>Our upcoming network intrusion detection system. Like a digital Miami heat, it'll make intruders sweat before they can breach your defenses.</p>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6">
+                <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".6s" data-wow-duration="1.3s">
+                    <div class="service-icon icon-gradient gradient-3 mb-30">
+                        <i class="lni lni-lock"></i>
+                    </div>
+                    <h4 class="mb-15">RealGuard</h4>
+                    <p>Experience real-time protection that's faster than a Messi goal. Our AI watches your system 24/7, ensuring no threat goes unnoticed.</p>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-6">
+                <div class="single-service text-center mb-30 wow fadeInUp" data-wow-delay=".8s" data-wow-duration="1.3s">
+                    <div class="service-icon icon-gradient gradient-4 mb-30">
+                        <i class="lni lni-unlock"></i>
+                    </div>
+                    <h4 class="mb-15">RansomBreaker</h4>
+                    <p>Our innovative ransomware cracking software. It's like having a locksmith for your data, ensuring you're never held hostage by cyber criminals.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
