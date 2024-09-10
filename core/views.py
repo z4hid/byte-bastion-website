@@ -12,3 +12,5 @@ class AboutPageView(TemplateView):
 class DownloadPageView(TemplateView):
     template_name = 'download.html'
     
+class ProductPageView(TemplateView):
+    template_name = 'product.html'
