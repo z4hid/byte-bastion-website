@@ -5,71 +5,86 @@ from django.core.files.storage import default_storage
 from django.conf import settings
 import os
 import requests
+from PIL import Image
 
-# def upload_page(request):
-#     if request.method == 'POST':
-#         if 'image' not in request.FILES:
-#             return JsonResponse({'error': 'No image file uploaded'}, status=400)
-
-#         image_file = request.FILES['image']
-
-#         # Save the uploaded file temporarily
-#         file_name = default_storage.save(image_file.name, image_file)
-#         file_path = os.path.join(settings.MEDIA_ROOT, file_name)
-
-#         # Send the file to FastAPI as a multipart/form-data
-#         fastapi_url = 'https://z4hid-hf-cloud-fastapi.hf.space/predict'
-#         try:
-#             with open(file_path, 'rb') as f:
-#                 files = {'file': (file_name, f, image_file.content_type)}
-#                 response = requests.post(fastapi_url, files=files)
-#                 response.raise_for_status()
-#                 result = response.json()
-
-#             # Delete the temporary file after processing
-#             default_storage.delete(file_name)
-
-#             return render(request, 'upload_form.html', {'result': result})
-#         except requests.RequestException as e:
-#             default_storage.delete(file_name)
-#             error_message = f'Error communicating with the API: {str(e)}'
-#             return render(request, 'upload_form.html', {'error': error_message})
-
-#     return render(request, 'upload_form.html')
 from .models import APIRequestLog
+
+class ImageConverter:
+    def create_rgb_image(self, file_path):
+        with open(file_path, 'rb') as f:
+            binary_data = f.read()
+
+        rgb_data = []
+        for i in range(0, len(binary_data), 3):
+            r = binary_data[i] if i < len(binary_data) else 0
+            g = binary_data[i+1] if i+1 < len(binary_data) else 0
+            b = binary_data[i+2] if i+2 < len(binary_data) else 0
+            rgb_data.append((r, g, b))
+
+        size = self.get_size(len(rgb_data))
+        image = Image.new('RGB', size)
+        image.putdata(rgb_data)
+        return image
+
+    def get_size(self, data_length):
+        if data_length < 10240:
+            width = 32
+        elif 10240 <= data_length <= 10240 * 3:
+            width = 64
+        elif 10240 * 3 < data_length <= 10240 * 6:
+            width = 128
+        elif 10240 * 6 < data_length <= 10240 * 10:
+            width = 256
+        else:
+            width = 512
+        
+        height = (data_length // width) + 1
+        return (width, height)
+
 
 def upload_page(request):
     if request.method == 'POST':
-        if 'image' not in request.FILES:
-            return JsonResponse({'error': 'No image file uploaded'}, status=400)
+        if 'file' not in request.FILES:
+            return JsonResponse({'error': 'No file uploaded'}, status=400)
 
-        image_file = request.FILES['image']
+        file = request.FILES['file']
 
-        # Save the uploaded file temporarily
-        file_name = default_storage.save(image_file.name, image_file)
-        file_path = os.path.join(settings.MEDIA_ROOT, file_name)
+        # Save the original uploaded file permanently
+        original_file_name = default_storage.save(f"original/{file.name}", file)
+        original_file_path = os.path.join(settings.MEDIA_ROOT, original_file_name)
 
-        # Send the file to FastAPI as a multipart/form-data
+        # Convert the file to RGB image and save as PNG
+        converter = ImageConverter()
+        rgb_image = converter.create_rgb_image(original_file_path)
+        png_file_name = f"{os.path.splitext(file.name)[0]}.png"
+
+        # Ensure the 'converted' directory exists
+        converted_dir = os.path.join(settings.MEDIA_ROOT, 'converted')
+        if not os.path.exists(converted_dir):
+            os.makedirs(converted_dir)  # Create the directory if it doesn't exist
+
+        png_file_path = os.path.join(converted_dir, png_file_name)
+        rgb_image.save(png_file_path, format='PNG')
+
+        # Send the PNG file to FastAPI as a multipart/form-data
         fastapi_url = 'https://z4hid-hf-cloud-fastapi.hf.space/predict'
         try:
-            with open(file_path, 'rb') as f:
-                files = {'file': (file_name, f, image_file.content_type)}
+            with open(png_file_path, 'rb') as f:
+                files = {'file': (os.path.basename(png_file_path), f, 'image/png')}
                 response = requests.post(fastapi_url, files=files)
                 response.raise_for_status()
                 result = response.json()
-                
+
                 # Extract the prediction from the response
                 prediction = result.get('prediction', 'Unknown')
 
                 # Log the request and response details
                 APIRequestLog.objects.create(
-                    image_name=file_name,
+                    image_name=os.path.basename(png_file_path),
                     response_status=response.status_code,
-                    response_data=prediction
+                    response_data=prediction,
+                    error_message=None
                 )
-
-            # Delete the temporary file after processing
-            default_storage.delete(file_name)
 
             return render(request, 'malware-detect.html', {'result': result})
 
@@ -78,14 +93,12 @@ def upload_page(request):
 
             # Log the error details
             APIRequestLog.objects.create(
-                image_name=file_name,
+                image_name=os.path.basename(png_file_path),
                 response_status=500,
                 response_data=None,
                 error_message=error_message
             )
 
-            # Delete the temporary file in case of error
-            default_storage.delete(file_name)
-            return render(request, 'malware-detect', {'error': error_message})
+            return render(request, 'malware-detect.html', {'error': error_message})
 
     return render(request, 'malware-detect.html')
