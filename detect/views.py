@@ -43,6 +43,20 @@ class ImageConverter:
 
 
 def upload_page(request):
+    """
+    Handles the upload of a file and redirects to the malware detection page.
+    Expects a 'file' field in the request FILES dictionary.
+    If the request is not a POST, simply renders the malware-detect.html template.
+
+    If the request is a POST, saves the original file to the 'original' directory,
+    converts the file to RGB image, saves the image as PNG to the 'converted'
+    directory, and sends the PNG file to the FastAPI as a multipart/form-data.
+    Logs the request and response details in the APIRequestLog model.
+
+    If the request is successful, renders the malware-detect.html template with
+    the prediction result. If the request fails, renders the template with an
+    error message.
+    """
     if request.method == 'POST':
         if 'file' not in request.FILES:
             return JsonResponse({'error': 'No file uploaded'}, status=400)
